@@ -27,16 +27,18 @@ function random (min, max){
 
 //FUNCIÓN QUE SE ACTIVA CON EL BOTÓN "JUGAR", OCULTA AL MISMO BOTÓN, HACE APARECER AL BOTÓN "VOLVER A JUGAR" Y EJECUTA LA FUNCION EXECUTION.
 function play(){
+    buttonPlayAgain.disabled = true;
     buttonPlay.style.display = 'none';
     buttonPlayAgain.style.display = 'flex';
     execution();
+    
 }
 
 
-//FUNCIÓN QUE SE ACTIVA AL PULSAR EL BOTÓN "VOLVER A JUGAR", RESETEA EL ARRAY NUMBERDRAW, ESCRIBE -- EN CADA CAJA, Y POSTERIORMENTE EJECUTA LA FUNCION EXECUTION.
+//FUNCIÓN QUE SE ACTIVA AL PULSAR EL BOTÓN "VOLVER A JUGAR", DESACTIVA EL BOTON, RESETEA EL ARRAY NUMBERDRAW, ESCRIBE -- EN CADA CAJA, Y POSTERIORMENTE EJECUTA LA FUNCION EXECUTION.
 function playAgain(){
+    buttonPlayAgain.disabled = true;
     numberDraw = [];
-
     for (let i = 1; i <= 48; i++) {
         let numberWithZero = i.toString().padStart(2, '0');
         numberDraw.push(numberWithZero);}
@@ -46,7 +48,7 @@ function playAgain(){
     }
 
 
-//ESCRIBE UN NUMERO ALEATORIO EN CADA CAJA, INCORPORANDO RETRASO EN LA EJECUCIÓN DE CADA UNO.
+//ESCRIBE UN NUMERO ALEATORIO EN CADA CAJA, INCORPORANDO RETRASO EN LA EJECUCIÓN DE CADA UNO, AL FINAL EJECUTA DESPUES DE FINALIZADO TODO EL PROCESO, LA FUNCION ENABLEBUTTON
 function execution(){
     gBoxes.forEach(function (box, index){
       setTimeout(function() {
@@ -54,8 +56,13 @@ function execution(){
         soundNumber.play();}, 
         index * 2000);
      });
+     setTimeout(enableButton, 12000)
 };
 
+//UTILIZADA UNICAMENTE PARA ACTIVAR EL BOTÓN "VOLVER A JUGAR"
+function enableButton(){
+    buttonPlayAgain.disabled = false;
+}
 
 //FUNCION QUE SELECCIONA DE FORMA ALEATORIO EL NUMERO DEL ARRAY NUMBERDRAW, LO USA Y POSTERIORMENTE CREA UN ARRAY NUEVO ELIMINANDO EL ELEMENTO USADO.
 function randomNumber(secuencia){
